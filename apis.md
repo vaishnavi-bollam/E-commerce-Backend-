@@ -57,7 +57,7 @@
             "price": 760,
             "description": "Capture vivid, professional-style photographs with help from this Lightweight Tripod. The tripod makes it easy to achieve reliable stability and score just the right angle when going after that award-winning shot. The handy tripod accommodates a wide range of digital, video, and still cameras.",
             "brand": "LEGO",
-            "total_reviews": 5463,
+            "total_rev9iews": 5463,
             "rating": 3.9,
             "availability": "In Stock"
         }
@@ -553,6 +553,16 @@
     Request URL: `https://apis.ccbp.in/products/16`
     Request Method: [GET]
     Status Code: {200 OK} 
+    ```json
+    {
+            "title": "Embroidered Net Gown",
+            "brand": "Manyavar",
+            "price": 62990,
+            "id": 16,
+            "image_url": "https://assets.ccbp.in/frontend/react-js/ecommerce/cloths-long-fork.png",
+            "rating": "3.2"
+        }
+    ```
 
     ```json
     {

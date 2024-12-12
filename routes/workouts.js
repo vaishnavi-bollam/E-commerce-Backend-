@@ -1,5 +1,5 @@
 const express = require("express")
-const Workout = require("../models/workoutModel")
+const Workout = require("../models/workoutSchemas")
 const {getworkouts,getworkout,createWorkout,deleteworkout,updateworkout} = require("../controllers/workoutControllers")
 
 const router = express.Router()
@@ -16,8 +16,6 @@ router.post("/",createWorkout)
 
 
 router.delete("/:id",deleteworkout)
-
-
 
 
 router.patch("/:id",updateworkout)
