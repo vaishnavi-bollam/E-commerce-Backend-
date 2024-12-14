@@ -6,7 +6,6 @@ const workoutRoutes = require("./routes/workouts")
 const PrimeDeals = require("./routes/primedeals")
 const Products = require("./routes/products")
 const  SignUpForm = require("./routes/signupForm")
-const ProductDetails = require("./routes/productDetails")
 
 
 // Router that contains all the routes/endpoints in the application
@@ -15,7 +14,6 @@ const router = Router();
 router.use("/workouts",workoutRoutes) // @todo : need to remove entire workout related code 
 router.use("/primeProducts",PrimeDeals)
 router.use("/products",Products)
-router.use("/",SignUpForm)
 router.use("/",SignUpForm)
 
 

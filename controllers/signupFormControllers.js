@@ -23,7 +23,7 @@ const registerSignup = async (req,res) =>{
   
       // Validate password length
       if (password.length < 6) {
-        return res.status(400).json({ error: "Password is too short" });
+        return res.status(400).json({ error: "Password should consists of atleast 6 characters" });
       }
   
       // Hash password
@@ -35,7 +35,6 @@ const registerSignup = async (req,res) =>{
         password: hashedPassword,
         email,
       })
-      // await newUser.save();
       
       res.status(201).json(newUser);
     } catch (error) {
@@ -52,7 +51,7 @@ const loginSignup = async (req,res)=>{
     // Find user in database
     const user = await SignUpSchema.findOne({ username });
     if (!user) {
-      return res.status(400).json({ error: "Invalid user" });
+      return res.status(404).json({ error: "User not found" });
     }
 
     // Verify password
@@ -63,7 +62,7 @@ const loginSignup = async (req,res)=>{
 
     // Generate JWT token
     const payload = { username: user.username, userId: user._id, name: user.name };
-    const token = jwt.sign(payload, JWT_SECRET, { expiresIn: '1h' });
+    const token = jwt.sign(payload, JWT_SECRET);
     console.log("JWT Payload:", payload);
     console.log("Generated Token:", token);
     res.status(200).json({ jwt_token: token });

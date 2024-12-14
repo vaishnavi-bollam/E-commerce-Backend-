@@ -5,41 +5,60 @@ const Product = require("../models/productsSchema")
 
 const {sortingConsts,order} = require("../constants/common.constants")
 
-//get all products
-const getProducts = async (req,res)=>{
-    try{
-    console.log("Query",req.query)
-    console.log("Body",req.body)
-    console.log("Params",req.params)
+/**
+ * getProducts
+ * 
+ * @description : gets all products with applied filters 
+ * 
+ * @param {*} req 
+ * @param {*} res 
+ */
+const getProducts = async (req, res) => {
+    try {
+        // console.log("Query", req.query);
+        // console.log("Body", req.body);
+        // console.log("Params", req.params);
 
-    const {sort_by,category,title_search,rating} = req.query
-    console.log("sortby",sort_by)
-    console.log("category",category)
-    console.log("title_search",title_search)
-    console.log("rating",rating)
+        const { sort_by, rating, title_search,category} = req.query;
+        
+        console.log("sortby", sort_by);
+        console.log("rating", rating);
+        console.log(typeof parseFloat(rating))
 
+        let query = {};
+        let sortOrder = {};
 
+        // If rating is given then retrieve products with rating >= 3
+        if (rating) {
+            query.rating = { $gte: Number(rating)}; 
+        }
 
-    let sortOrder = {}; // Default to no sorting
+        if (category){
+            query.category = {$eq: Number(category) }
+            
+        }
 
-        // Determine the sort order based on the "sort_by" parameter
-    if (sort_by === sortingConsts.PRICE_HIGH) {
-        sortOrder.price =order.DESCENDING; // Descending order for price
-    } else if (sort_by === sortingConsts.PRICE_LOW) {
-        sortOrder.price = order.ASCENDING; // Ascending order for price
-    }
+        // Case-insensitive search
+        if (title_search) {
+            query.title = { $regex: title_search, $options: "i" }; 
+        }
 
+        if (sort_by === sortingConsts.PRICE_HIGH) {
+            sortOrder.price = order.DESCENDING; // Descending order for price
+        } else if (sort_by === sortingConsts.PRICE_LOW) {
+            sortOrder.price = order.ASCENDING; // Ascending order for price
+        }
+        console.log(query) //{ rating: { '$gte': 3 } }
 
-    const products = await Product.find({}).sort(sortOrder)
+        // Fetch products based on the query and sort order
+        const products = await Product.find(query).sort(sortOrder);
 
-    res.status(200).json(products)
-}
-    catch (error) {
+        res.status(200).json(products);
+    } catch (error) {
         console.error("Error fetching products:", error);
-        res.status(500).json({ message:error.message });
+        res.status(500).json({ message: "Internal Server Error" });
     }
-
-}
+};
 
 
 //get one product
