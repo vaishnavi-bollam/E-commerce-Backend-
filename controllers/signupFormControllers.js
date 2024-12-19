@@ -12,7 +12,9 @@ const JWT_SECRET = process.env.JWT_SECRET || "Vaishnavi";
 //register route
 const registerSignup = async (req,res) =>{
     const { username, password, email } = req.body;
-    console.log(username)
+    // console.log(username)
+    console.log("Registering user:", req.body);
+
     try {
       // Check if user already exists
       // console.log("in try block")
@@ -63,16 +65,13 @@ const loginSignup = async (req,res)=>{
     // Generate JWT token
     const payload = { username: user.username, userId: user._id, name: user.name };
     const token = jwt.sign(payload, JWT_SECRET);
-    console.log("JWT Payload:", payload);
-    console.log("Generated Token:", token);
+    // console.log("JWT Payload:", payload);
+    // console.log("Generated Token:", token);
     res.status(200).json({ jwt_token: token });
   } catch (error) {
     res.status(500).json({ error: "Internal Server Error" });
   }
 }
-
-
-
 
 
 
